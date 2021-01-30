@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3 id="node">My node and mongo db</h3>
+    <h4 id="userAdd"></h4>
+    <div class="container">
+        <div class="row">
+            <input type="text" class="form-control" id="user">
+            <button class="btn btn-primary" id= "adduser"> adduser</button>
+        </div>
+    </div>
+    <script>
+        fetch('http://localhost:3000/users/1')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("userAdd").innerText = data.name
+            })
+
+
+            // post data to server
+            const adduser = document.getElementById('adduser');
+            adduser.addEventListener('click', ()=>{
+                const name = document.getElementById('user').value
+                const user = {name}
+                fetch('http://localhost:3000/adduser',{
+                    method: 'POST',
+                    body: JSON.stringify(user),
+                    headers:{
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                .then(res => res.json())
+                .then(data => ShowUser(data))
+            })
+            
+        const ShowUser = (data) =>{
+         document.getElementById("userAdd").innerText = data.name;
+          
+
+        } 
+    </script>
+</body>
+
